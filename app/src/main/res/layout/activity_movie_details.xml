@@ -130,7 +130,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="@dimen/margin_24dp"
             android:lineSpacingExtra="4sp"
-            android:text="@string/storyline"
+            android:text="@string/cast"
             android:textAppearance="@style/title_text_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/materialTextView6" />
@@ -142,7 +142,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="7dp"
             android:layout_marginEnd="@dimen/margin_4dp"
-            android:layout_marginBottom="@dimen/margin_16dp"
+            android:layout_marginBottom="109dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/materialCardView22"
             app:layout_constraintHorizontal_bias="0.5"
