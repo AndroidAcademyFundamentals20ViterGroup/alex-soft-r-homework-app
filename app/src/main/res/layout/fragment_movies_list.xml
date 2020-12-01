@@ -33,8 +33,7 @@
         android:layout_width="170dp"
         android:layout_height="296dp"
         android:layout_marginTop="33dp"
-        app:layout_constraintEnd_toStartOf="@+id/materialCardView2"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialTextView"
         app:strokeColor="@color/card_stroke_color"
@@ -58,8 +57,8 @@
 
                 <ImageView
                     android:id="@+id/imageView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/movie_1"
                     android:src="@drawable/gradient"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -67,6 +66,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textview.MaterialTextView
@@ -75,8 +75,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@string/avengers_end_game"
+                android:text="@string/avengers_end_game2"
                 android:textAppearance="@style/main_text_14sp"
+                android:lineSpacingExtra="4sp"
+                android:maxLines="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clImage" />
@@ -106,65 +108,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/ratingBar"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="4dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="4.5"
+                android:stepSize="0.5"
+                android:theme="@style/RatingBar"
                 app:layout_constraintBottom_toBottomOf="@+id/clImage"
                 app:layout_constraintStart_toStartOf="@id/clOne"
-                app:layout_constraintTop_toBottomOf="@id/materialTextView3"
-                app:srcCompat="@drawable/ic_star_icon_gray"
-                app:tint="@color/text_red" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/clImage"
-                app:layout_constraintStart_toEndOf="@id/imageView1"
-                app:layout_constraintTop_toBottomOf="@id/materialTextView3"
-                app:srcCompat="@drawable/ic_star_icon_gray"
-                app:tint="@color/text_red" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/clImage"
-                app:layout_constraintStart_toEndOf="@id/imageView2"
-                app:layout_constraintTop_toBottomOf="@id/materialTextView3"
-                app:srcCompat="@drawable/ic_star_icon_gray"
-                app:tint="@color/text_red" />
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/clImage"
-                app:layout_constraintStart_toEndOf="@id/imageView3"
-                app:layout_constraintTop_toBottomOf="@id/materialTextView3"
-                app:srcCompat="@drawable/ic_star_icon_gray"
-                app:tint="@color/text_red" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/clImage"
-                app:layout_constraintStart_toEndOf="@id/imageView4"
-                app:layout_constraintTop_toBottomOf="@id/materialTextView3"
-                app:srcCompat="@drawable/ic_star_icon_gray" />
+                app:layout_constraintTop_toBottomOf="@id/materialTextView3" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/materialTextView4"
@@ -172,11 +130,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="@string/_137_min"
-                android:textAppearance="@style/grayed_text_14sp"
-                app:layout_constraintStart_toEndOf="@id/imageView5"
-                app:layout_constraintTop_toBottomOf="@id/materialTextView3" />
+                android:lineSpacingExtra="3sp"
+                android:text="@string/_125_reviews"
+                android:textAppearance="@style/grayed_text_8sp"
+                app:layout_constraintStart_toEndOf="@id/ratingBar"
+                app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+                app:layout_constraintTop_toTopOf="@id/ratingBar" />
 
             <ImageView
                 android:id="@+id/imageView6"
@@ -186,12 +145,12 @@
                 app:layout_constraintBottom_toBottomOf="@+id/materialCardView5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/materialCardView5"
-                app:srcCompat="@drawable/ic_like"
+                app:srcCompat="@drawable/ic_baseline_favorite_24"
                 app:tint="@color/white" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView5"
-                android:layout_width="24dp"
+                android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -212,41 +171,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView2"
-        android:layout_width="166dp"
-        android:layout_height="268dp"
-        android:layout_marginTop="33dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
-        app:strokeColor="@color/card_stroke_color"
-        app:strokeWidth="1dp" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView3"
-        android:layout_width="166dp"
-        android:layout_height="268dp"
-        android:layout_marginTop="11dp"
-        app:layout_constraintEnd_toStartOf="@+id/materialCardView4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-        app:strokeColor="@color/card_stroke_color"
-        app:strokeWidth="1dp" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView4"
-        android:layout_width="166dp"
-        android:layout_height="268dp"
-        android:layout_marginTop="11dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/materialCardView3"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView2"
-        app:strokeColor="@color/card_stroke_color"
-        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

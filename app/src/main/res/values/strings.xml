@@ -2,10 +2,11 @@
     <string name="app_name">MovieS</string>
     <string name="movies_list">Movies list</string>
     <string name="avengers_end_game">"Avengers:\nEnd Game"</string>
+    <string name="avengers_end_game2">Avengers: End Game</string>
     <string name="_137_min">137 min</string>
     <string name="action_adventure_drama">Action, Adventure, Drama</string>
     <string name="_13">13+</string>
-    <string name="_125_reviews">125 Reviews</string>
+    <string name="_125_reviews">125 REVIEWS</string>
     <string name="storyline">Storyline</string>
     <string name="description">After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\' actions and restore balance to the universe.</string>
     <string name="robert_downey_jr">Robert Downey Jr.</string>
