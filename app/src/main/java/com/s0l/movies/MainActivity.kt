@@ -1,12 +1,13 @@
 package com.s0l.movies
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.appcompat.app.AppCompatActivity
+import com.s0l.movies.adapters.MoviesAdapter
 import com.s0l.movies.details.FragmentMoviesDetails
 import com.s0l.movies.movies_list.FragmentMoviesList
-import com.s0l.movies.movies_list.MoviesClick
 
-class MainActivity : AppCompatActivity(), MoviesClick {
+class MainActivity : AppCompatActivity(), MoviesAdapter.MoviesClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,11 +15,9 @@ class MainActivity : AppCompatActivity(), MoviesClick {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             // Display the fragment as the main content.
-            val rootFragment =
-                FragmentMoviesList.newInstance().apply { setClickListener(this@MainActivity) }
             supportFragmentManager.beginTransaction()
                 .apply {
-                    add(R.id.persistent_container, rootFragment)
+                    add(R.id.persistent_container, FragmentMoviesList())
                     commit()
                 }
         } else {
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity(), MoviesClick {
                     supportFragmentManager.fragments.map { add(R.id.persistent_container, it) }
                     commit()
                 }
-            restoreClickListener()
         }
     }
 
@@ -36,7 +34,7 @@ class MainActivity : AppCompatActivity(), MoviesClick {
         //Show Movies Details
         supportFragmentManager.beginTransaction()
             .apply {
-                add(R.id.persistent_container, FragmentMoviesDetails.newInstance())
+                add(R.id.persistent_container, FragmentMoviesDetails.newInstance(id))
                 commit()
             }
     }
@@ -50,16 +48,10 @@ class MainActivity : AppCompatActivity(), MoviesClick {
                     remove(lastFragment)
                     commit()
                 }
-            restoreClickListener()
         } else {
             super.onBackPressed()
         }
     }
 
-    private fun restoreClickListener() {
-        val rootFragment = supportFragmentManager.findFragmentById(R.id.persistent_container)
-        if (rootFragment is FragmentMoviesList && rootFragment.isAdded)
-            rootFragment.setClickListener(this@MainActivity)
-    }
 
 }

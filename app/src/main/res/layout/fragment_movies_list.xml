@@ -28,148 +28,27 @@
         app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
         app:layout_constraintTop_toTopOf="@+id/appCompatImageView" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="170dp"
-        android:layout_height="296dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginStart="16dp"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="17dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
-        app:strokeColor="@color/card_stroke_color"
-        app:strokeWidth="1dp">
+        app:layout_constraintTop_toBottomOf="@id/materialTextView"
+        app:layout_constraintVertical_bias="0.0">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clOne"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/black_500">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMovies"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/view_holder_movie"
+            tools:spanCount="2" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clImage"
-                android:layout_width="166dp"
-                android:layout_height="248dp"
-                android:layout_marginBottom="48dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/movie_1"
-                    android:src="@drawable/gradient"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/materialTextView1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/avengers_end_game2"
-                android:textAppearance="@style/main_text_14sp"
-                android:lineSpacingExtra="4sp"
-                android:maxLines="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/clImage" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/materialTextView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/_137_min"
-                android:textAppearance="@style/grayed_text_8sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/materialTextView1" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/materialTextView3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="70dp"
-                android:text="@string/action_adventure_drama"
-                android:textAppearance="@style/red_text_8sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatRatingBar
-                android:id="@+id/ratingBar"
-                style="@style/RatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:rating="4.5"
-                android:stepSize="0.5"
-                android:theme="@style/RatingBar"
-                app:layout_constraintBottom_toBottomOf="@+id/clImage"
-                app:layout_constraintStart_toStartOf="@id/clOne"
-                app:layout_constraintTop_toBottomOf="@id/materialTextView3" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/materialTextView4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:lineSpacingExtra="3sp"
-                android:text="@string/_125_reviews"
-                android:textAppearance="@style/grayed_text_8sp"
-                app:layout_constraintStart_toEndOf="@id/ratingBar"
-                app:layout_constraintBottom_toBottomOf="@id/ratingBar"
-                app:layout_constraintTop_toTopOf="@id/ratingBar" />
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/materialCardView5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/materialCardView5"
-                app:srcCompat="@drawable/ic_baseline_favorite_24"
-                app:tint="@color/white" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView5"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:checkable="false"
-                android:padding="4dp"
-                app:cardBackgroundColor="@color/rating_bk_gray"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/materialTextView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/_13"
-                    android:textAppearance="@style/main_text_12sp" />
-            </com.google.android.material.card.MaterialCardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

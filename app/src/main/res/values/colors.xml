@@ -16,4 +16,7 @@
     <color name="black_shadow_80">#80000000</color>
     <color name="rating_inactive">#6D6D80</color>
     <color name="rating_active">#FF3365</color>
+
+    <color name="card_movie_bg">#FF222232</color>
+
 </resources>

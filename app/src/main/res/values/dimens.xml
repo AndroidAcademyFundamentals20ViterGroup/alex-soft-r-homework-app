@@ -7,5 +7,9 @@
     <dimen name="margin_24dp">24dp</dimen>
     <dimen name="corner_radius2">4dp</dimen>
     <dimen name="edit_box_corner_radius">8dp</dimen>
+    <dimen name="decorator_actor">8dp</dimen>
     <dimen name="empty_offset">0dp</dimen>
+    <dimen name="offset_2dp">2dp</dimen>
+    <dimen name="movie_card_width">170dp</dimen>
+    <dimen name="movie_card_height">296dp</dimen>
 </resources>
