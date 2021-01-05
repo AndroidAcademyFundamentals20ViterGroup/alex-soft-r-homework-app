@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-//TODO remove context from VM, very bad way....
 class FragmentMoviesListViewModel(private val interactor: MovieInteractor) : ViewModel() {
 
     private val loadingStateLiveData = MutableLiveData<LoadingState>()
