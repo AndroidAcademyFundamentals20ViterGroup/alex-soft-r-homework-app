@@ -6,19 +6,19 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.s0l.movies.R
 import com.s0l.movies.adapters.MoviesAdapter
-import com.s0l.movies.data.Movie
+import com.s0l.movies.base.ViewModelsFactory
 import kotlinx.android.synthetic.main.fragment_movies_list.*
+import kotlinx.coroutines.Dispatchers.IO
 
 class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
 
-    private val viewModel: FragmentMoviesListViewModel by viewModels()
+    private val viewModel: FragmentMoviesListViewModel by viewModels { ViewModelsFactory(MovieInteractor(requireContext(), IO)) }
 
     private val adapter = MoviesAdapter()
 
@@ -31,7 +31,7 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
 
     private fun setupObservers() {
         viewModel.getLoadingStageLiveData().observe(viewLifecycleOwner, {
-            when(it){
+            when (it) {
                 is MovesIsLoading -> {
                     swipeToRefresh.isEnabled = it.showProgress
                     swipeToRefresh.isRefreshing = it.showProgress
@@ -44,7 +44,11 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
                 is MovesLoadingError -> {
                     swipeToRefresh.isEnabled = false
                     swipeToRefresh.isRefreshing = false
-                    Toast.makeText(requireContext(), it.exception.localizedMessage, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        it.exception.localizedMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         })
@@ -68,7 +72,7 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
         adapter.listener = null
     }
 
-    private fun setupGUI(){
+    private fun setupGUI() {
         val recyclerView = requireView().findViewById<RecyclerView>(R.id.rvMovies)
         recyclerView.layoutManager = GridLayoutManager(
             requireContext(), getMoviesListColumnCount()
