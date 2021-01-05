@@ -30,17 +30,27 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/gradient" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvAgeRating"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView5"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="226dp"
-            android:textAppearance="@style/main_text_12sp"
+            android:checkable="false"
+            android:padding="4dp"
+            app:cardBackgroundColor="@color/rating_bk_gray"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/_13" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvAgeRating"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textAppearance="@style/main_text_12sp"
+                tools:text="13+" />
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvTitle"
@@ -125,7 +135,7 @@
             tools:text="@string/description" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView7"
+            android:id="@+id/tvCast"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
@@ -150,7 +160,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView7"
+            app:layout_constraintTop_toBottomOf="@+id/tvCast"
             tools:itemCount="4"
             tools:listitem="@layout/view_holder_actor" />
     </androidx.constraintlayout.widget.ConstraintLayout>

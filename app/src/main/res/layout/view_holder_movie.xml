@@ -115,7 +115,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textAppearance="@style/main_text_12sp"
-                tools:text="@string/_13" />
+                tools:text="13+" />
         </com.google.android.material.card.MaterialCardView>
 
 

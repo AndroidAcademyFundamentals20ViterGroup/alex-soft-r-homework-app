@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.s0l.movies.R
 import com.s0l.movies.adapters.MoviesAdapter
+import com.s0l.movies.data.Movie
+import kotlinx.android.synthetic.main.fragment_movies_list.*
 
 class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
 
@@ -23,6 +26,28 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
         super.onViewCreated(view, savedInstanceState)
         //initial setup
         setupGUI()
+        setupObservers()
+    }
+
+    private fun setupObservers() {
+        viewModel.getLoadingStageLiveData().observe(viewLifecycleOwner, {
+            when(it){
+                is MovesIsLoading -> {
+                    swipeToRefresh.isEnabled = it.showProgress
+                    swipeToRefresh.isRefreshing = it.showProgress
+                }
+                is MovesIsLoaded -> {
+                    swipeToRefresh.isEnabled = false
+                    swipeToRefresh.isRefreshing = false
+                    adapter.setUpMovies(it.list)
+                }
+                is MovesLoadingError -> {
+                    swipeToRefresh.isEnabled = false
+                    swipeToRefresh.isRefreshing = false
+                    Toast.makeText(requireContext(), it.exception.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -32,8 +57,10 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MoviesAdapter.MoviesClick)
+        if (context is MoviesAdapter.MoviesClick) {
             adapter.listener = context
+            viewModel.loadMovies()
+        }
     }
 
     override fun onDetach() {
@@ -47,7 +74,7 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
             requireContext(), getMoviesListColumnCount()
         )
         recyclerView.adapter = adapter
-        adapter.setUpMovies(list = viewModel.getMovies())
+        //adapter.setUpMovies(list = viewModel.getMovies())
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

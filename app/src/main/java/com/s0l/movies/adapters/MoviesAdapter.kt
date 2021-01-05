@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.s0l.movies.R
 import com.s0l.movies.adapters.holders.MovieCardViewHolder
-import com.s0l.movies.models.MovieData
+import com.s0l.movies.data.Movie
 
 class MoviesAdapter :
     RecyclerView.Adapter<MovieCardViewHolder>() {
 
     interface MoviesClick {
-        fun onMovieClicked(id: Int)
+        fun onMovieClicked(movie: Movie)
     }
 
     var listener: MoviesClick? = null
 
-    private var moviesList = mutableListOf<MovieData>()
+    private var moviesList = mutableListOf<Movie>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MovieCardViewHolder(
         itemView = LayoutInflater.from(parent.context)
@@ -30,17 +30,17 @@ class MoviesAdapter :
 
     override fun getItemCount() = moviesList.size
 
-    fun setUpMovies(list: List<MovieData>) {
-        moviesList = list as MutableList<MovieData>
+    fun setUpMovies(list: List<Movie>) {
+        moviesList = list as MutableList<Movie>
         notifyDataSetChanged()
     }
 
-    fun addMovie(movie: MovieData) {
+    fun addMovie(movie: Movie) {
         moviesList.add(movie)
         notifyDataSetChanged()
     }
 
-    fun addMovie(movie: MovieData, position: Int) {
+    fun addMovie(movie: Movie, position: Int) {
         moviesList.add(position, movie)
         notifyItemInserted(position)
     }

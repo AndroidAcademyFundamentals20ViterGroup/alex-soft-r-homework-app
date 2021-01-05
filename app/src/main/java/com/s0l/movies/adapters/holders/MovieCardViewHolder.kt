@@ -11,7 +11,7 @@ import coil.load
 import com.google.android.material.textview.MaterialTextView
 import com.s0l.movies.R
 import com.s0l.movies.adapters.MoviesAdapter
-import com.s0l.movies.models.MovieData
+import com.s0l.movies.data.Movie
 
 class MovieCardViewHolder(val itemView: View, val listener: MoviesAdapter.MoviesClick?) :
     RecyclerView.ViewHolder(itemView) {
@@ -26,30 +26,29 @@ class MovieCardViewHolder(val itemView: View, val listener: MoviesAdapter.Movies
     private val ratingBar = itemView.findViewById<AppCompatRatingBar>(R.id.ratingBar)
 
     @SuppressLint("SetTextI18n")
-    fun bind(movie: MovieData) {
+    fun bind(movie: Movie) {
         tvTitle.text = movie.title
-        tvAgeRating.text = "${movie.ageLimit} +"
-        tvGenre.text = movie.tags.joinToString(separator = ",")
-        tvReviews.text = "${movie.reviews} reviews"
-        tvLength.text = "${movie.length} min"
+        tvAgeRating.text = "${movie.minimumAge} +"
+        tvGenre.text = movie.genres.joinToString(separator = ", "){it.name}
+        tvReviews.text = "${movie.numberOfRatings} reviews"
+        tvLength.text = "${movie.runtime} min"
 
-        ratingBar.rating = movie.rating
+        ratingBar.rating = movie.ratings /2
 
-        itemView.setOnClickListener { listener?.onMovieClicked(id = adapterPosition) }
+        itemView.setOnClickListener { listener?.onMovieClicked(movie = movie) }
 
-        setLiked(isLiked = movie.isLiked)
+        //setLiked(isLiked = movie.isLiked)
         setPoster(movie = movie)
     }
 
-    private fun setPoster(movie: MovieData) {
+    private fun setPoster(movie: Movie) {
         ivPoster.apply {
             clear()
-            load(movie.coverDrawable){
+            load(movie.poster){
                 crossfade(true)
                 placeholder(R.drawable.ic_baseline_local_play_24)
             }
         }
-
     }
 
     private fun setLiked(isLiked: Boolean) {
