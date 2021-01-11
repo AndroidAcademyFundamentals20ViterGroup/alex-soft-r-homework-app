@@ -27,14 +27,41 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="6dp"
-            android:gravity="center_vertical"
+            android:gravity="start|top"
+            android:inputType="textMultiLine|textPersonName"
             android:lineSpacingExtra="2sp"
+            android:scrollHorizontally="false"
             android:textAppearance="@style/main_text_12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivActor"
             tools:text="@string/robert_downey_jr" />
+
+        <View
+            android:id="@+id/ivArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/white_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            app:srcCompat="@drawable/ic_baseline_horizontal_rule_24" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvJob"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="start|top"
+            android:inputType="textMultiLine|textPersonName"
+            android:lineSpacingExtra="2sp"
+            android:scrollHorizontally="false"
+            android:textAppearance="@style/job_text_12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivArrow"
+            tools:text="Job" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

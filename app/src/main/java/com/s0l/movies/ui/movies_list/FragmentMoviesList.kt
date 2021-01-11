@@ -1,10 +1,12 @@
-package com.s0l.movies.movies_list
+package com.s0l.movies.ui.movies_list
 
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,15 +14,37 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.s0l.movies.R
 import com.s0l.movies.adapters.MoviesAdapter
-import com.s0l.movies.base.ViewModelsFactory
-import kotlinx.android.synthetic.main.fragment_movies_list.*
-import kotlinx.coroutines.Dispatchers.IO
+import com.s0l.movies.databinding.FragmentMoviesListBinding
+import com.s0l.movies.models.entity.Movie
+import com.s0l.movies.models.network.GenreMovieResponse
+import com.s0l.movies.utils.RecyclerViewPaginator
+import dagger.hilt.android.AndroidEntryPoint
 
-class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
+@AndroidEntryPoint
+class FragmentMoviesList : Fragment() {
 
-    private val viewModel: FragmentMoviesListViewModel by viewModels { ViewModelsFactory(MovieInteractor(requireContext(), IO)) }
+    private var _binding: FragmentMoviesListBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    private val viewModel: FragmentMoviesListViewModel by viewModels()
 
     private val adapter = MoviesAdapter()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMoviesListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,20 +57,27 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
         viewModel.getLoadingStageLiveData().observe(viewLifecycleOwner, {
             when (it) {
                 is MovesIsLoading -> {
-                    swipeToRefresh.isEnabled = it.showProgress
-                    swipeToRefresh.isRefreshing = it.showProgress
+                    binding.swipeToRefresh.isEnabled = it.showProgress
+                    binding.swipeToRefresh.isRefreshing = it.showProgress
                 }
                 is MovesIsLoaded -> {
-                    swipeToRefresh.isEnabled = false
-                    swipeToRefresh.isRefreshing = false
-                    adapter.setUpMovies(it.list)
+                    when (it.data) {
+                        is GenreMovieResponse -> {
+                            viewModel.loadMovies2(1)
+                        }
+                        else -> {
+                            binding.swipeToRefresh.isEnabled = false
+                            binding.swipeToRefresh.isRefreshing = false
+                            adapter.setUpMovies(it.data as List<Movie>)
+                        }
+                    }
                 }
                 is MovesLoadingError -> {
-                    swipeToRefresh.isEnabled = false
-                    swipeToRefresh.isRefreshing = false
+                    binding.swipeToRefresh.isEnabled = false
+                    binding.swipeToRefresh.isRefreshing = false
                     Toast.makeText(
                         requireContext(),
-                        it.exception.localizedMessage,
+                        it.exception,
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -57,13 +88,13 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         retainInstance = true
+        viewModel.loadGenres()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MoviesAdapter.MoviesClick) {
             adapter.listener = context
-            viewModel.loadMovies()
         }
     }
 
@@ -78,7 +109,13 @@ class FragmentMoviesList : Fragment(R.layout.fragment_movies_list) {
             requireContext(), getMoviesListColumnCount()
         )
         recyclerView.adapter = adapter
-        //adapter.setUpMovies(list = viewModel.getMovies())
+        recyclerView.addOnScrollListener(
+            RecyclerViewPaginator(recyclerView = recyclerView,
+                isLoading = { viewModel.isLoading() },
+                loadMore = { viewModel.loadMovies2(it) },
+                onLast = { false }
+            ).apply { currentPage = 1 }
+        )
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

@@ -59,6 +59,12 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="job_text_12sp" parent="@style/fontRobotoBold">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/rating_inactive</item>
+    </style>
+
     <style name="grayed_text_8sp" parent="@style/fontRobotoBold">
         <item name="android:textSize">8sp</item>
         <item name="android:textColor">@color/text_grayed</item>

@@ -1,13 +1,16 @@
-package com.s0l.movies
+package com.s0l.movies.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.s0l.movies.R
 import com.s0l.movies.adapters.MoviesAdapter
-import com.s0l.movies.data.Movie
-import com.s0l.movies.details.FragmentMoviesDetails
-import com.s0l.movies.movies_list.FragmentMoviesList
+import com.s0l.movies.models.entity.Movie
+import com.s0l.movies.ui.details.FragmentMoviesDetails
+import com.s0l.movies.ui.movies_list.FragmentMoviesList
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MoviesAdapter.MoviesClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {

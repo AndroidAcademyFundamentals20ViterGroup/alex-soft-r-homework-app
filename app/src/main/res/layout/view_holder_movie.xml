@@ -27,6 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_local_play_24"
             tools:srcCompat="@drawable/poster_avengers" />
 
         <androidx.appcompat.widget.AppCompatImageView

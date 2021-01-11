@@ -4,22 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.s0l.movies.R
-import com.s0l.movies.adapters.holders.ActorCardViewHolder
-import com.s0l.movies.data.Actor
+import com.s0l.movies.adapters.holders.PersonCardViewHolder
+import com.s0l.movies.models.entity.Person
 import com.s0l.movies.utils.getScreenWidth
 
 
-class ActorsAdapter : RecyclerView.Adapter<ActorCardViewHolder>() {
+class PersonAdapter : RecyclerView.Adapter<PersonCardViewHolder>() {
 
     companion object {
         const val NUMBERS_OF_ITEM_TO_DISPLAY = 4
     }
 
-    private var actors = mutableListOf<Actor>()
+    private var persons = mutableListOf<Person>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorCardViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonCardViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_holder_actor, parent, false)
+            .inflate(R.layout.view_holder_person, parent, false)
 
         val offset = itemView.context.resources.getDimension(R.dimen.margin_16dp)
             .toInt() * 2//size and count of one Actor card
@@ -30,28 +30,28 @@ class ActorsAdapter : RecyclerView.Adapter<ActorCardViewHolder>() {
         itemView.layoutParams.width =
             (itemView.context.getScreenWidth() - offset - decorator) / NUMBERS_OF_ITEM_TO_DISPLAY
 
-        return ActorCardViewHolder(itemView = itemView)
+        return PersonCardViewHolder(itemView = itemView)
     }
 
-    override fun onBindViewHolder(holder: ActorCardViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PersonCardViewHolder, position: Int) {
         holder.setIsRecyclable(true)
-        holder.bind(actor = actors[position])
+        holder.bind(person = persons[position])
     }
 
-    override fun getItemCount(): Int = actors.size
+    override fun getItemCount(): Int = persons.size
 
-    fun setUpActors(list: List<Actor>) {
-        actors = list as MutableList<Actor>
+    fun setUpPerson(list: List<Person>) {
+        persons.addAll(list)
         notifyDataSetChanged()
     }
 
-    fun addActor(movie: Actor) {
-        actors.add(movie)
+    fun addPerson(movie: Person) {
+        persons.add(movie)
         notifyDataSetChanged()
     }
 
-    fun addActor(movie: Actor, position: Int) {
-        actors.add(position, movie)
+    fun addPerson(movie: Person, position: Int) {
+        persons.add(position, movie)
         notifyItemInserted(position)
     }
 }

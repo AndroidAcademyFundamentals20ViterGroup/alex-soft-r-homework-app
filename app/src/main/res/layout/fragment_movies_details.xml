@@ -130,6 +130,7 @@
             android:lineSpacingExtra="4sp"
             android:textAppearance="@style/main_text_14sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/materialTextView5"
             tools:text="@string/description" />
@@ -142,26 +143,55 @@
             android:layout_marginTop="@dimen/margin_24dp"
             android:lineSpacingExtra="4sp"
             android:text="@string/cast"
+            android:visibility="visible"
             android:textAppearance="@style/title_text_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvStory" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvActors"
+            android:id="@+id/rvCast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="7dp"
             android:layout_marginEnd="@dimen/margin_16dp"
-            android:layout_marginBottom="109dp"
-            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCast"
+            app:layout_constraintBottom_toTopOf="@id/tvCrew"
+            tools:itemCount="4"
+            tools:listitem="@layout/view_holder_person" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvCrew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_24dp"
+            android:lineSpacingExtra="4sp"
+            android:text="@string/crew"
+            android:visibility="visible"
+            android:textAppearance="@style/title_text_14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvCast" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCrew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCast"
+            app:layout_constraintTop_toBottomOf="@+id/tvCrew"
             tools:itemCount="4"
-            tools:listitem="@layout/view_holder_actor" />
+            tools:listitem="@layout/view_holder_person" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

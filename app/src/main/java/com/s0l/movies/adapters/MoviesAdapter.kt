@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.s0l.movies.R
 import com.s0l.movies.adapters.holders.MovieCardViewHolder
-import com.s0l.movies.data.Movie
+import com.s0l.movies.models.entity.Movie
 
 class MoviesAdapter :
     RecyclerView.Adapter<MovieCardViewHolder>() {
@@ -31,7 +31,7 @@ class MoviesAdapter :
     override fun getItemCount() = moviesList.size
 
     fun setUpMovies(list: List<Movie>) {
-        moviesList = list as MutableList<Movie>
+        moviesList.addAll(list)
         notifyDataSetChanged()
     }
 
