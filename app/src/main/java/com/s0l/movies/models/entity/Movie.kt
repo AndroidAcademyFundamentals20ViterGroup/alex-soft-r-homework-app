@@ -3,11 +3,13 @@ package com.s0l.movies.models.entity
 import android.os.Parcelable
 import com.s0l.movies.models.Genre
 import com.s0l.movies.models.network.CreditsResponse
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 
 @Parcelize
+@JsonClass(generateAdapter = true)
 data class Movie(
     val id: Int,
     var page: Int, //!

@@ -1,14 +1,12 @@
 package com.s0l.movies.di
 
 import androidx.annotation.NonNull
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.s0l.movies.BuildConfig
 import com.s0l.movies.Constants
 import com.s0l.movies.api.DiscoverService
 import com.s0l.movies.api.GenreService
 import com.s0l.movies.api.MovieDetailService
-import com.s0l.movies.repository.networkresponse.NetworkResponseAdapterFactory
+import com.s0l.movies.api.RequestInterceptor
 import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -17,9 +15,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -39,6 +35,7 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(RequestInterceptor())
             .addInterceptor(httpLoggingInterceptor)
+            .callTimeout(Constants.Delay_10, TimeUnit.MILLISECONDS)
             .connectTimeout(Constants.Delay_10, TimeUnit.MILLISECONDS)
             .readTimeout(Constants.Delay_10, TimeUnit.MILLISECONDS)
             .writeTimeout(Constants.Delay_10, TimeUnit.MILLISECONDS)
@@ -59,33 +56,19 @@ object NetworkModule {
         @NonNull okHttpClient: OkHttpClient,
 //        moshi: Moshi
     ): Retrofit {
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl("https://api.themoviedb.org/")
             .addConverterFactory(GsonConverterFactory.create())
 //            .addCallAdapterFactory(NetworkResponseAdapterFactory())
 //            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory())
             .build()
     }
-
-/*    @Provides
-    @Singleton
-    fun provideMoshi() = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()*/
-
-/*
-    @Provides
-    @Singleton
-    fun provideGson():
-            Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create()
-
-    @Provides
-    @Singleton
-    fun provideGsonConverterFactory(gson: Gson):
-            GsonConverterFactory = GsonConverterFactory.create(gson)
-*/
 
 /*    @Provides
     @Singleton

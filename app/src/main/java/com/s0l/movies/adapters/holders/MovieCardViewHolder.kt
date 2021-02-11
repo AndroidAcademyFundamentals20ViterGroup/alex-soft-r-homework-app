@@ -28,6 +28,7 @@ class MovieCardViewHolder(val itemView: View, val listener: MoviesAdapter.Movies
 
     @SuppressLint("SetTextI18n")
     fun bind(movie: Movie) {
+
         tvTitle.text = movie.title
         tvAgeRating.text = if (movie.adult) "16 +" else "13 +"
         tvGenre.text = movie.genres?.joinToString(separator = ", ") { it.name.capitalize() }

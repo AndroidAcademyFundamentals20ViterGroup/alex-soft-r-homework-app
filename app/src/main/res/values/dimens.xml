@@ -11,5 +11,5 @@
     <dimen name="empty_offset">0dp</dimen>
     <dimen name="offset_2dp">2dp</dimen>
     <dimen name="movie_card_width">170dp</dimen>
-    <dimen name="movie_card_height">296dp</dimen>
+    <dimen name="movie_card_height">310dp</dimen>
 </resources>

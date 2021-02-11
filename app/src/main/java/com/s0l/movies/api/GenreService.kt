@@ -2,10 +2,8 @@ package com.s0l.movies.api
 
 import com.s0l.movies.models.network.DiscoverMovieResponse
 import com.s0l.movies.models.network.GenreMovieResponse
-import com.s0l.movies.repository.networkresponse.NetworkResponseBase
-import com.skydoves.sandwich.ApiResponse
+import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface GenreService {
     /**
@@ -18,6 +16,6 @@ interface GenreService {
      *  @return [DiscoverMovieResponse] response
      */
     @GET("/3/genre/movie/list")
-    suspend fun fetchGenreMovie(): ApiResponse<GenreMovieResponse>
+    suspend fun fetchGenreMovie(): Response<GenreMovieResponse>
 
 }

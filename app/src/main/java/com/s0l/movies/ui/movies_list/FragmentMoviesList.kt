@@ -61,16 +61,9 @@ class FragmentMoviesList : Fragment() {
                     binding.swipeToRefresh.isRefreshing = it.showProgress
                 }
                 is MovesIsLoaded -> {
-                    when (it.data) {
-                        is GenreMovieResponse -> {
-                            viewModel.loadMovies2(1)
-                        }
-                        else -> {
-                            binding.swipeToRefresh.isEnabled = false
-                            binding.swipeToRefresh.isRefreshing = false
-                            adapter.setUpMovies(it.data as List<Movie>)
-                        }
-                    }
+                    binding.swipeToRefresh.isEnabled = false
+                    binding.swipeToRefresh.isRefreshing = false
+                    adapter.setUpMovies(it.data as List<Movie>)
                 }
                 is MovesLoadingError -> {
                     binding.swipeToRefresh.isEnabled = false
@@ -88,7 +81,8 @@ class FragmentMoviesList : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         retainInstance = true
-        viewModel.loadGenres()
+//        viewModel.loadGenres()
+        viewModel.loadMovies2(1)
     }
 
     override fun onAttach(context: Context) {
@@ -123,7 +117,9 @@ class FragmentMoviesList : Fragment() {
         //handle screen rotation
         setupGUI()
     }
-
+    //https://medium.com/@gsaillen95/how-to-inflate-different-layoutmanagers-for-each-adapter-with-concatadapter-76cdee6266ca
+    //https://medium.com/androiddevelopers/merge-adapters-sequentially-with-mergeadapter-294d2942127a
+    //https://github.com/erikjhordan-rey/RecyclerView-ConcatAdapter
     private fun getMoviesListColumnCount(): Int {
         val displayMetrics = DisplayMetrics()
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {

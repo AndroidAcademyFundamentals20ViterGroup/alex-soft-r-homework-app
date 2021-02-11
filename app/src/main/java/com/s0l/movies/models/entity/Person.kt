@@ -1,9 +1,11 @@
 package com.s0l.movies.models.entity
 
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+//@Parcelize
+@JsonClass(generateAdapter = true)
 data class Person(
     val adult: Boolean,
     val gender: Int?,
@@ -19,4 +21,4 @@ data class Person(
     val order: Int,
     val department: String = "",
     val job: String = ""
-) : Parcelable
+) //: Parcelable

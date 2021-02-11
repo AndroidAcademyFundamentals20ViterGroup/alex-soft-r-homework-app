@@ -1,10 +1,10 @@
 package com.s0l.movies.models
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import com.squareup.moshi.JsonClass
 
-@Parcelize
+//@Parcelize
+@JsonClass(generateAdapter = true)
 data class Genre(
     val id: Int,
     val name: String
-) : Parcelable
+) //: Parcelable

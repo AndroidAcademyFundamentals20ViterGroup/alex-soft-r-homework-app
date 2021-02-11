@@ -1,11 +1,10 @@
-package com.s0l.movies.di
+package com.s0l.movies.api
 
 import android.content.res.Resources
 import androidx.core.os.ConfigurationCompat
 import com.s0l.movies.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.util.*
 
 internal class RequestInterceptor : Interceptor {
   override fun intercept(chain: Interceptor.Chain): Response {

@@ -2,6 +2,7 @@ package com.s0l.movies.api
 
 import com.s0l.movies.models.entity.Movie
 import com.skydoves.sandwich.ApiResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -16,6 +17,6 @@ interface MovieDetailService {
      * @return [Movie] response
      */
     @GET("/3/movie/{movie_id}?append_to_response=videos,credits,reviews")
-    suspend fun fetchMovieDetails(@Path("movie_id") id: Int): ApiResponse<Movie>
+    suspend fun fetchMovieDetails(@Path("movie_id") id: Int): Response<Movie>
 
 }
