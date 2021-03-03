@@ -15,4 +15,5 @@
     <string name="chris_hemsworth">Chris Hemsworth</string>
     <string name="cast">Cast</string>
     <string name="crew">Crew</string>
+    <string name="retry">Retry</string>
 </resources>

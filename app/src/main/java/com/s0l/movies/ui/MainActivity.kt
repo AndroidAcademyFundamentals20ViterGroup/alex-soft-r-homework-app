@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.s0l.movies.R
-import com.s0l.movies.adapters.MoviesAdapter
-import com.s0l.movies.models.entity.Movie
+import com.s0l.movies.data.model.entity.MovieEntity
+import com.s0l.movies.ui.adapters.MoviesAdapter
 import com.s0l.movies.ui.details.FragmentMoviesDetails
 import com.s0l.movies.ui.movies_list.FragmentMoviesList
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,13 +38,14 @@ class MainActivity : AppCompatActivity(), MoviesAdapter.MoviesClick {
             }
     }
 
+
     private fun openMoviesList() {
         openNewFragment(fragment = FragmentMoviesList(), addToBackStack = false)
     }
 
-    override fun onMovieClicked(movie: Movie) {
+    override fun onMovieClicked(movie: MovieEntity) {
         //Show Movies Details
-        openNewFragment(fragment = FragmentMoviesDetails.newInstance(movie), addToBackStack = true)
+        openNewFragment(fragment = FragmentMoviesDetails.newInstance(movie.id), addToBackStack = true)
     }
 
     override fun onBackPressed() {

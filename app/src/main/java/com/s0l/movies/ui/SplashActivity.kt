@@ -5,17 +5,20 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.s0l.movies.Constants
 import com.s0l.movies.R
+import com.s0l.movies.data.room.AppDatabase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SplashActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class SplashActivity: AppCompatActivity() {
     private val activityScope = CoroutineScope(Dispatchers.Main)
 
-    companion object {
-        private const val SPLASH_DELAY: Long = Constants.SPLASH_DELAY
-    }
+    @Inject
+    lateinit var appDatabase: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,8 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         activityScope.launch {
-            delay(SPLASH_DELAY)
+
+            delay(Constants.SPLASH_DELAY)
 
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
