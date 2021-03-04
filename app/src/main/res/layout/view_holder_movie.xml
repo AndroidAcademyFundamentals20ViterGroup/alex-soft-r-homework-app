@@ -8,7 +8,9 @@
     android:layout_marginStart="11dp"
     android:layout_marginTop="11dp"
     app:cardCornerRadius="8dp"
+    android:transitionGroup="true"
     app:strokeColor="@color/card_stroke_color"
+    app:rippleColor="@color/card_stroke_color2"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,25 +25,14 @@
             android:layout_height="0dp"
             android:paddingStart="@dimen/offset_2dp"
             android:paddingEnd="@dimen/offset_2dp"
+            android:adjustViewBounds="true"
             app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:foreground="@drawable/gradient"
             app:srcCompat="@drawable/ic_baseline_local_play_24"
             tools:srcCompat="@drawable/poster_avengers" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/gradient"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="bottom"
-            android:paddingStart="@dimen/offset_2dp"
-            android:paddingEnd="@dimen/offset_2dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/gradient" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvGenre"
@@ -49,9 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="24dp"
             android:textAppearance="@style/red_text_8sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="@string/action_adventure_drama" />
@@ -125,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.83" />
+            app:layout_constraintGuide_percent="0.8" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvTitle"

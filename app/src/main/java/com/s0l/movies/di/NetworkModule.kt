@@ -92,4 +92,10 @@ object NetworkModule {
         return retrofit.create(MoviesService::class.java)
     }
 
+//    @Provides
+//    @Singleton
+//    fun provideTopRatedMovieInteractor(@NonNull retrofit: Retrofit): TopRatedMovieInteractor {
+//        return TopRatedMovieInteractor()
+//    }
+
 }

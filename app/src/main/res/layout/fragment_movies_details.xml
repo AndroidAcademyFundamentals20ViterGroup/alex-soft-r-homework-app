@@ -106,6 +106,35 @@
             app:layout_constraintTop_toTopOf="@id/ratingBar"
             tools:text="@string/_125_reviews" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnScheduleWatch"
+            android:layout_width="168dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:background="@drawable/button_active_main"
+            android:textColor="@color/white"
+            android:textAllCaps="true"
+            android:text="@string/button_schedule_watch"
+            android:textSize="@dimen/text_14sp"
+            app:rippleColor="#FFFF3365"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnWatchTrailer"
+            app:layout_constraintTop_toBottomOf="@id/tvReviews"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnWatchTrailer"
+            android:layout_width="168dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:background="@drawable/button_active_main"
+            android:textColor="@color/white"
+            android:textAllCaps="true"
+            android:text="@string/button_trailer_watch"
+            android:textSize="@dimen/text_14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnScheduleWatch"
+            app:layout_constraintTop_toBottomOf="@id/tvReviews"/>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextView5"
             android:layout_width="0dp"
@@ -116,7 +145,7 @@
             android:text="@string/storyline"
             android:textAppearance="@style/title_text_14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvReviews" />
+            app:layout_constraintTop_toBottomOf="@id/btnScheduleWatch" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvStory"

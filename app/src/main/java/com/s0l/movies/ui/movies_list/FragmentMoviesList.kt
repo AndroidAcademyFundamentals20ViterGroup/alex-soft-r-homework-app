@@ -42,6 +42,13 @@ open class FragmentMoviesList : BaseFragment() {
     private val adapter = MoviesAdapter()
     private var spanCount = VERTICAL_SPAN_COUNT
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+//        enterTransition = MaterialContainerTransform()//MaterialSharedAxis(X, false)
+//        exitTransition = MaterialContainerTransform()//MaterialSharedAxis(X, true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -1,13 +1,25 @@
 package com.s0l.movies.ui.details
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
+import android.provider.CalendarContract
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,12 +27,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.clear
 import coil.load
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransform.FADE_MODE_THROUGH
 import com.s0l.movies.R
+import com.s0l.movies.api.Api
 import com.s0l.movies.data.model.entity.MovieEntity
 import com.s0l.movies.databinding.FragmentMoviesDetailsBinding
 import com.s0l.movies.ui.adapters.ActorAdapter
 import com.s0l.movies.ui.adapters.CrewAdapter
 import com.s0l.movies.ui.base.BaseFragment
+import com.s0l.movies.utils.showMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -49,14 +65,15 @@ class FragmentMoviesDetails : BaseFragment() {
 
     private var movieDto: MovieEntity? = null
 
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+
+    private var isRationaleShown = false
+
     private val itemDecorator by lazy {
         val itemDecorator = DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL)
-        itemDecorator.setDrawable(
-            ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.decorator_actors
-            )!!
-        )
+        ContextCompat.getDrawable(requireContext(), R.drawable.decorator_actors)?.let {
+            itemDecorator.setDrawable(it)
+        }
         itemDecorator
     }
 
@@ -109,10 +126,23 @@ class FragmentMoviesDetails : BaseFragment() {
 
     private val viewModel: FragmentMoviesDetailsViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            fadeMode = FADE_MODE_THROUGH
+            duration = 350
+            setAllContainerColors(ContextCompat.getColor(requireContext(), R.color.black_shadow_80))
+            scrimColor = ContextCompat.getColor(requireContext(), R.color.black_shadow_80)
+            isElevationShadowEnabled = true
+            startElevation = 9f
+            endElevation = 9f
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMoviesDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -126,8 +156,11 @@ class FragmentMoviesDetails : BaseFragment() {
     @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
         setupGUI()
         arguments?.let {
+            view.transitionName = it.getInt(MOVIE_ID).toString()
             viewModel.loadMovieDetails(it.getInt(MOVIE_ID))
         }
         with(viewModel) {
@@ -159,24 +192,26 @@ class FragmentMoviesDetails : BaseFragment() {
         updateData()
     }
 
+    private var movieTitle = ""
+
     private fun updateData() {
-        movieDto?.let {
+        movieDto?.let { movie ->
 
             val actorAdapter = ActorAdapter()
             recyclerViewCast.adapter = actorAdapter
-            it.takeIf { it.actors.isNotEmpty()}?.let {
+            movie.takeIf { it.actors.isNotEmpty() }?.let {
                 binding.tvCast.visibility = View.VISIBLE
                 actorAdapter.setUpPerson(list = it.actors)
             }
 
             val crewAdaper = CrewAdapter()
             recyclerViewCrew.adapter = crewAdaper
-            it.takeIf { it.crew.isNotEmpty()}?.let {
+            movie.takeIf { it.crew.isNotEmpty() }?.let {
                 binding.tvCrew.visibility = View.VISIBLE
                 crewAdaper.setUpPerson(list = it.crew)
             }
 
-            it.backdrop_path?.let {
+            movie.backdrop_path?.let {
                 binding.ivPosterBig.apply {
                     clear()
                     load(it) {
@@ -186,13 +221,117 @@ class FragmentMoviesDetails : BaseFragment() {
                 }
             }
 
-            binding.tvAgeRating.text = if (it.adult) "16 +" else "13 +"
-            binding.tvTitle.text = it.title
+            binding.tvAgeRating.text = if (movie.adult) "16 +" else "13 +"
+            binding.tvTitle.text = movie.title
             binding.tvTags.text =
-                it.genres.joinToString(separator = ", ") { it.name.capitalize() }
-            binding.ratingBar.rating = it.vote_average / 2
-            binding.tvReviews.text = "${it.vote_count} reviews"
-            binding.tvStory.text = it.overview
+                movie.genres.joinToString(separator = ", ") { it.name.capitalize() }
+            binding.ratingBar.rating = movie.vote_average / 2
+            binding.tvReviews.text = "${movie.vote_count} reviews"
+            binding.tvStory.text = movie.overview
+
+            binding.btnScheduleWatch.setOnClickListener {
+                movieTitle = movie.title
+                onAddToCalendar()
+            }
+
+            binding.btnWatchTrailer.setOnClickListener {
+                onWatchTrailer(movie.videos?.let { Api.getYoutubeVideoPath(it.first().key) } ?: "")
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                onCalendarPermissionGrated()
+            } else {
+                onCalendarPermissionNotGranted()
+            }
+        }
+    }
+
+    override fun onDetach() {
+        requestPermissionLauncher.unregister()
+        super.onDetach()
+    }
+
+    private fun onAddToCalendar() {
+        when {
+            ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_CALENDAR)
+                    == PackageManager.PERMISSION_GRANTED -> onCalendarPermissionGrated()
+            shouldShowRequestPermissionRationale(Manifest.permission.WRITE_CALENDAR) ->
+                showCalendarPermissionExplanationDialog()
+            isRationaleShown -> showCalendarPermissionDeniedDialog()
+            else -> requestCalendarPermission()
+        }
+    }
+
+    private fun requestCalendarPermission() {
+        requestPermissionLauncher.launch(Manifest.permission.WRITE_CALENDAR)
+    }
+
+    @RequiresPermission(Manifest.permission.WRITE_CALENDAR)
+    private fun onCalendarPermissionGrated() {
+        val calendarIntent = Intent(Intent.ACTION_INSERT)
+        calendarIntent.type = "vnd.android.cursor.item/event"
+        calendarIntent.putExtra(CalendarContract.Events.TITLE,
+            getString(R.string.calendar_event_title, movieTitle))
+        calendarIntent.putExtra(CalendarContract.Events.DESCRIPTION,
+            getString(R.string.button_schedule_watch))
+        calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false)
+        calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, System.currentTimeMillis())
+        calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, System.currentTimeMillis())
+        startActivity(calendarIntent)
+    }
+
+    private fun onCalendarPermissionNotGranted() {
+        showMessage(getString(R.string.permission_not_granted_text))
+    }
+
+    private fun showCalendarPermissionExplanationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.permission_dialog_explanation_text)
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                isRationaleShown = true
+                requestCalendarPermission()
+                dialog.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun showCalendarPermissionDeniedDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.permission_dialog_denied_text)
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                startActivity(
+                    Intent(
+                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.parse("package:" + requireContext().packageName)
+                    )
+                )
+                dialog.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun onWatchTrailer(video: String) {
+        if (video.isNotEmpty()) {
+            Intent(Intent.ACTION_VIEW, Uri.parse(video)).also {
+                startActivity(it)
+            }
+        } else {
+            showMessage(getString(R.string.no_video_found_message))
         }
     }
 }

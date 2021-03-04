@@ -13,4 +13,10 @@
     <dimen name="offset_2dp">2dp</dimen>
     <dimen name="movie_card_width">170dp</dimen>
     <dimen name="movie_card_height">310dp</dimen>
+
+    <dimen name="text_14sp">14sp</dimen>
+    <dimen name="text_18sp">18sp</dimen>
+    <dimen name="text_40sp">24sp</dimen>
+
+    <integer name="shared_element_transition_duration">1000</integer>
 </resources>

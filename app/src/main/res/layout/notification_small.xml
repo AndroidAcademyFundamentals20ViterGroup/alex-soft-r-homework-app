@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/black_500">
+
+    <ImageView
+        android:id="@+id/movie_image"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginStart="@dimen/margin_4dp"
+        android:layout_marginEnd="@dimen/margin_4dp"
+        android:layout_marginTop="@dimen/margin_4dp"
+        android:foreground="@drawable/gradient"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/hemswoth_c"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appears"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4dp"
+            android:textColor="@color/text_red"
+            android:textSize="@dimen/text_18sp"
+            android:text="@string/chanel_new_top_rated_movie_description"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/movie_image"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/movie_name"
+            style="@style/MovieNameStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textColor="@color/white_text"
+            android:textSize="@dimen/text_18sp"
+            android:textStyle="bold"
+            android:lineSpacingMultiplier="0.9"
+            app:layout_constraintTop_toBottomOf="@id/appears"
+            app:layout_constraintStart_toEndOf="@id/movie_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="@string/avengers_end_game"/>
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
+            android:textColor="@color/white"
+            android:alpha="0.75"
+            android:textStyle="bold"
+            android:letterSpacing="0.07"
+            android:textSize="@dimen/text_14sp"
+            android:text="@string/rating_text"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -87,7 +87,7 @@
     </style>
 
     <!-- RatingBar -->
-    <style name="RatingBar" parent="android:style/Widget.Material.RatingBar.Small">
+    <style name="RatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:minHeight">13.02dp</item>
         <item name="android:maxHeight">13.2dp</item>
         <item name="android:minWidth">12dp</item>
@@ -105,5 +105,16 @@
         <item name="android:maxHeight">13.2dp</item>
         <item name="android:minWidth">12dp</item>
         <item name="android:maxWidth">12dp</item>
+    </style>
+
+    <!-- Movie Name style on MovieDetail screen-->
+    <style name="MovieNameStyle">
+        <item name="android:layout_marginStart">@dimen/margin_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_16dp</item>
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:textSize">@dimen/text_40sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:lineSpacingMultiplier">0.9</item>
     </style>
 </resources>
