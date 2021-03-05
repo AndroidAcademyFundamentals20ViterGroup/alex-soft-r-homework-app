@@ -47,7 +47,7 @@ class MovieNotifications(private val context: Context) {
     @ExperimentalCoilApi
     @WorkerThread
     suspend fun show(movie: MovieEntity) {
-        val contentUri = "https://movie.prometeydev.ru/movie/${movie.id}".toUri()
+        val contentUri = "https://movies.s0l.com/movie/${movie.id}".toUri()
 
         val smallContentView =
             RemoteViews(context.packageName, R.layout.notification_small).apply {
