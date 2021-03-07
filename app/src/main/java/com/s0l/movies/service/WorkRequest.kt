@@ -8,11 +8,13 @@ class WorkRequest(private val appContext: Context) {
 
     private val constraints = Constraints.Builder()
         .setRequiredNetworkType(NetworkType.UNMETERED)
-        .setRequiresCharging(true)
+        .setRequiresCharging(false)
+        .setRequiresBatteryNotLow(false)
+        .setRequiresDeviceIdle(false)
         .build()
 
-    private val periodicRequest = PeriodicWorkRequest.Builder(
-        MoviesWorker::class.java, REPEAT_INTERVAL, TimeUnit.MINUTES, FLEX_INTERVAL, TimeUnit.MINUTES
+    private val periodicRequest = PeriodicWorkRequestBuilder<MoviesWorker>(
+        REPEAT_INTERVAL, TimeUnit.MINUTES, FLEX_INTERVAL, TimeUnit.MINUTES
     ).setConstraints(constraints).build()
 
     fun start() {
@@ -24,7 +26,7 @@ class WorkRequest(private val appContext: Context) {
     companion object {
         private const val MOVIES_PERIODIC_WORK = "MOVIES_PERIODIC_WORK"
         private const val REPEAT_INTERVAL = 15L
-        private const val FLEX_INTERVAL = 1L
+        private const val FLEX_INTERVAL = 5L
 
         fun getInstance(appContext: Context) = WorkRequest(appContext)
     }
